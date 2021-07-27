@@ -14,6 +14,7 @@ class Calendar extends Component {
 
   render() {
     const { weekDates } = this.props;
+    const { id, title, description, dateFrom, dateTo } = this.state.events
     return (
       <>
         <section className="calendar">
@@ -21,7 +22,10 @@ class Calendar extends Component {
           <div className="calendar__body">
             <div className="calendar__week-container">
               <Sidebar />
-              <Week weekDates={weekDates} events={this.state.events} />
+              <Week
+                weekDates={weekDates}
+                events={this.state.events}
+              />
             </div>
           </div>
           {this.props.statusModalWindow ? (
