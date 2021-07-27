@@ -1,6 +1,10 @@
 .button {
   height: 40px;
-  border-radius: 8px;
+  //border-radius: 8px;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-right-radius: 28px;
+  border-bottom-left-radius: 28px;
   border: 1px solid #ccc;
   outline: none;
   cursor: pointer;

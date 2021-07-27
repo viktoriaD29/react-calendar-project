@@ -9,6 +9,43 @@ import './common.scss';
 class App extends Component {
   state = {
     weekStartDate: new Date(),
+    statusModalWindow: false,
+  };
+
+  nextWeek = () => {
+    let today = this.state.weekStartDate;
+    let nextweek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 7
+    );
+    this.setState({
+      weekStartDate: nextweek,
+    });
+  };
+
+  prevWeek = () => {
+    let today = this.state.weekStartDate;
+    let prevweek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 7
+    );
+    this.setState({
+      weekStartDate: prevweek,
+    });
+  };
+
+  getTodayDate = () => {
+    this.setState({
+      weekStartDate: new Date(),
+    });
+  };
+
+  handelModalWindow = () => {
+    this.setState({
+      statusModalWindow: !this.state.statusModalWindow,
+    });
   };
 
   render() {
@@ -17,8 +54,18 @@ class App extends Component {
 
     return (
       <>
-        <Header />
-        <Calendar weekDates={weekDates} />
+        <Header
+          nextWeek={this.nextWeek}
+          prevWeek={this.prevWeek}
+          todayDate={this.getTodayDate}
+          handelModalWindow={this.handelModalWindow}
+        />
+
+        <Calendar
+          weekDates={weekDates}
+          statusModalWindow={this.state.statusModalWindow}
+          handelModalWindow={this.handelModalWindow}
+        />
       </>
     );
   }
