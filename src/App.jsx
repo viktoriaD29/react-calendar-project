@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 
@@ -6,69 +6,56 @@ import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 
-class App extends Component {
-  state = {
-    weekStartDate: new Date(),
-    statusModalWindow: false,
-  };
+const App = () => {
+  const [weekStartDate, setWeekStartDate] = useState(new Date());
+  const [statusModalWindow, setStatusModalWindow] = useState(false);
 
-  nextWeek = () => {
-    let today = this.state.weekStartDate;
+  const nextWeek = () => {
+    let today = weekStartDate;
     let nextweek = new Date(
       today.getFullYear(),
       today.getMonth(),
       today.getDate() + 7
     );
-    this.setState({
-      weekStartDate: nextweek,
-    });
+    setWeekStartDate(nextweek);
   };
 
-  prevWeek = () => {
-    let today = this.state.weekStartDate;
+  const prevWeek = () => {
+    let today = weekStartDate;
     let prevweek = new Date(
       today.getFullYear(),
       today.getMonth(),
       today.getDate() - 7
     );
-    this.setState({
-      weekStartDate: prevweek,
-    });
+    setWeekStartDate(prevweek);
   };
 
-  getTodayDate = () => {
-    this.setState({
-      weekStartDate: new Date(),
-    });
+  const getTodayDate = () => {
+    setWeekStartDate(new Date());
   };
 
-  handelModalWindow = () => {
-    this.setState({
-      statusModalWindow: !this.state.statusModalWindow,
-    });
+  const handelModalWindow = () => {
+    setStatusModalWindow(!statusModalWindow);
   };
 
-  render() {
-    const { weekStartDate } = this.state;
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
-    return (
-      <>
-        <Header
-          nextWeek={this.nextWeek}
-          prevWeek={this.prevWeek}
-          todayDate={this.getTodayDate}
-          handelModalWindow={this.handelModalWindow}
-        />
+  return (
+    <>
+      <Header
+        nextWeek={nextWeek}
+        prevWeek={prevWeek}
+        todayDate={getTodayDate}
+        handelModalWindow={handelModalWindow}
+      />
 
-        <Calendar
-          weekDates={weekDates}
-          statusModalWindow={this.state.statusModalWindow}
-          handelModalWindow={this.handelModalWindow}
-        />
-      </>
-    );
-  }
-}
+      <Calendar
+        weekDates={weekDates}
+        statusModalWindow={statusModalWindow}
+        handelModalWindow={handelModalWindow}
+      />
+    </>
+  );
+};
 
 export default App;
