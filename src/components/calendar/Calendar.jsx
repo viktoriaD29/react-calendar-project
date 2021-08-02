@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week.jsx';
 import Sidebar from '../sidebar/Sidebar';
-//import events from '../../gateway/events';
+import { getEvents } from '../../gateway/eventsGateway';
 import Modal from '../modal/modal.jsx';
+import PropTypes from 'prop-types';
 import './calendar.scss';
 
-const Calendar = ({ weekDates, statusModalWindow, handelModalWindow }) => {
+const Calendar = ({ weekDates, statusModal, handelModal }) => {
   const [events, setEvents] = useState([]);
 
-  const changeEvent = (newEvents) => {
-    console.log(newEvents)
-    setEvents([newEvents]);
-  }
-  console.log(events)
+  const getEvent = () =>
+    getEvents().then((response) =>
+      setEvents(
+        response.map(({ dateFrom, dateTo, ...rest }) => ({
+          dateFrom: new Date(dateFrom),
+          dateTo: new Date(dateTo),
+          ...rest,
+        }))
+      )
+    );
 
-  // const getEvent = () => {
-  //   getEvents().then((res) => setEvents(res));
-  // };
-  // useEffect(() => {
-  //   getEvent();
-  // }, []);
-
-  // const baseUrl =
-  //   'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/events';
-
-  // const getEvents = (baseUrl) => {
-  //   fetch(baseUrl).then(res => console.log(res.json()))
-  //   throw new Error('Internal Server Error. Can\'t display events')
-  // }
+  useEffect(() => {
+    getEvent();
+  }, []);
 
   return (
     <>
@@ -41,8 +35,8 @@ const Calendar = ({ weekDates, statusModalWindow, handelModalWindow }) => {
             <Week weekDates={weekDates} events={events} />
           </div>
         </div>
-        {statusModalWindow ? (
-          <Modal closeModalWindow={handelModalWindow} onSubmit={changeEvent} />
+        {statusModal ? (
+          <Modal closeModal={handelModal} events={events} getEvent={getEvent} />
         ) : null}
       </section>
     </>
@@ -51,34 +45,8 @@ const Calendar = ({ weekDates, statusModalWindow, handelModalWindow }) => {
 
 export default Calendar;
 
-// const mapTasks = (tasks) =>
-//   tasks.map(({ date, dateFrom, dateTo, ...rest }) => ({
-//     dateFrom: getDateTime(date, dateFrom),
-//     dateTo: getDateTime(date, dateTo),
-//     ...rest,
-//   }));
-// // export const mapTasks = (tasks) =>
-// //   tasks.map(({ ...rest }) => ({
-// //     ...rest,
-// //   }));
-// export const getEvents = () => {
-//   return fetch(baseUrl)
-//     .then((response) => response.json())
-//     .then((tasks) => mapTasks(tasks))
-//     .catch(() => {
-//       console.log('error');
-//     });
-// };
-// export const addEvent = (events) =>
-//   fetch(baseUrl, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(events),
-//   });
-// export const deleteEvent = (id) => {
-//   return fetch(`${baseUrl}/${id}`, {
-//     method: 'DELETE',
-//   });
-// };
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  statusModal: PropTypes.bool.isRequired,
+  handelModal: PropTypes.func.isRequired,
+};

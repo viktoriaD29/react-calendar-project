@@ -1,18 +1,21 @@
 import React from 'react';
-
 import { days } from '../../utils/dateUtils.js';
+import PropTypes from 'prop-types';
 
 const Navigation = ({ weekDates }) => {
-  let isToday = false
+  let today = false;
+
   return (
     <header className="calendar__header">
       {weekDates.map((dayDate) => (
         <div className="calendar__day-label day-label">
           {dayDate.getDate() === new Date().getDate()
-            ? (isToday = true)
-            : (isToday = false)}
+            ? (today = true)
+            : (today = false)}
           <span
-            className={isToday ? 'day-label__day-name-now' : 'day-label__day-name'}
+            className={
+              today ? 'day-label__day-name-today' : 'day-label__day-name'
+            }
           >
             {days[dayDate.getDay()]}
           </span>
@@ -24,3 +27,7 @@ const Navigation = ({ weekDates }) => {
 };
 
 export default Navigation;
+
+Navigation.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+};

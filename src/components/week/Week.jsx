@@ -1,10 +1,9 @@
 import React from 'react';
 import Day from '../day/Day';
-
+import PropTypes from 'prop-types';
 import './week.scss';
 
 const Week = ({ weekDates, events }) => {
-  console.log(events)
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {
@@ -15,7 +14,7 @@ const Week = ({ weekDates, events }) => {
         //getting all events from the day we will render
 
         const dayEvents = events.filter(
-          (event) => event.dateFrom.getDate() === dayStart.getDate()
+          (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
         );
 
         return (
@@ -31,3 +30,8 @@ const Week = ({ weekDates, events }) => {
 };
 
 export default Week;
+
+Week.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
+};

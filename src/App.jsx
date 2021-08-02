@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
-
 import './common.scss';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
-  const [statusModalWindow, setStatusModalWindow] = useState(false);
+  const [statusModal, setStatusModal] = useState(false);
 
   const nextWeek = () => {
     let today = weekStartDate;
@@ -34,8 +32,8 @@ const App = () => {
     setWeekStartDate(new Date());
   };
 
-  const handelModalWindow = () => {
-    setStatusModalWindow(!statusModalWindow);
+  const handelModal = () => {
+    setStatusModal(!statusModal);
   };
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
@@ -46,13 +44,13 @@ const App = () => {
         nextWeek={nextWeek}
         prevWeek={prevWeek}
         todayDate={getTodayDate}
-        handelModalWindow={handelModalWindow}
+        handelModal={handelModal}
       />
 
       <Calendar
         weekDates={weekDates}
-        statusModalWindow={statusModalWindow}
-        handelModalWindow={handelModalWindow}
+        statusModal={statusModal}
+        handelModal={handelModal}
       />
     </>
   );
