@@ -3,7 +3,7 @@ import Navigation from './../navigation/Navigation';
 import Week from '../week/Week.jsx';
 import Sidebar from '../sidebar/Sidebar';
 import { getEvents } from '../../gateway/eventsGateway';
-import Modal from '../modal/modal.jsx';
+import Modal from '../modal/Modal.jsx';
 import PropTypes from 'prop-types';
 import './calendar.scss';
 
