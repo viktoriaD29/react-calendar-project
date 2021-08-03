@@ -4,11 +4,11 @@ import { formatMins } from '../../../src/utils/dateUtils.js';
 import PropTypes from 'prop-types';
 
 const Hour = ({ dataHour, hourEvents, dataDay }) => {
-  let [margin, setMargin] = useState(0);
+  const [margin, setMargin] = useState(0);
 
   useEffect(() => {
     let interval = setInterval(() => {
-      setMargin((margin = new Date().getMinutes())), 60000;
+      setMargin((new Date().getMinutes())), 60000;
     }, 1000);
 
     return () => clearInterval(interval);

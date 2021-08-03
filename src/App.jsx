@@ -8,23 +8,17 @@ const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
   const [statusModal, setStatusModal] = useState(false);
 
+  const nowYear = weekStartDate.getFullYear();
+  const nowMonth = weekStartDate.getMonth();
+  const nowDate = weekStartDate.getDate();
+
   const nextWeek = () => {
-    let today = weekStartDate;
-    let nextweek = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() + 7
-    );
+    const nextweek = new Date(nowYear, nowMonth, nowDate + 7);
     setWeekStartDate(nextweek);
   };
 
   const prevWeek = () => {
-    let today = weekStartDate;
-    let prevweek = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate() - 7
-    );
+    const prevweek = new Date(nowYear, nowMonth, nowDate - 7);
     setWeekStartDate(prevweek);
   };
 
