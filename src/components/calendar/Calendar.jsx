@@ -10,16 +10,7 @@ import './calendar.scss';
 const Calendar = ({ weekDates, statusModal, handelModal }) => {
   const [events, setEvents] = useState([]);
 
-  const getEvent = () =>
-    getEvents().then((response) =>
-      setEvents(
-        response.map(({ dateFrom, dateTo, ...rest }) => ({
-          dateFrom: new Date(dateFrom),
-          dateTo: new Date(dateTo),
-          ...rest,
-        }))
-      )
-    );
+  const getEvent = () => getEvents().then((response) => setEvents(response));
 
   useEffect(() => {
     getEvent();

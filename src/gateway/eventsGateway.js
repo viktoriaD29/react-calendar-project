@@ -1,5 +1,13 @@
 const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/events';
 
+const mapEvents = (events) => {
+  return events.map(({ dateFrom, dateTo, ...rest }) => ({
+    dateFrom: new Date(dateFrom),
+    dateTo: new Date(dateTo),
+    ...rest,
+  }));
+};
+
 export const getEvents = () => {
   return fetch(baseUrl)
     .then((response) => {
@@ -7,6 +15,7 @@ export const getEvents = () => {
         return response.json();
       }
     })
+    .then((event) => mapEvents(event))
     .catch(() => alert("Internal Server Error. Can't display events"));
 };
 
@@ -25,3 +34,6 @@ export const deleteEvents = (id) => {
     method: 'DELETE',
   }).catch(() => alert("Internal Server Error. Can't display events"));
 }
+
+
+

@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import './event.scss';
 
 const Event = ({ ID, height, marginTop, title, time }) => {
-  const [deleteWindow, setDeleteWindow] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
   const [deleteEvent, setDeleteEvent] = useState(false);
 
   const clickEvent = () => {
-    setDeleteWindow(!deleteWindow);
+    setShowBtn(!showBtn);
   };
 
   const handleDelete = () => {
@@ -25,7 +25,7 @@ const Event = ({ ID, height, marginTop, title, time }) => {
     <div style={eventStyle} className="event" onClick={clickEvent}>
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
-      {deleteWindow === true && (
+      {showBtn === true && (
         <button onClick={handleDelete} className="delete-event-btn">
           Delete
         </button>
