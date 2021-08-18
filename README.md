@@ -3,14 +3,18 @@
 Calendar link:
 https://suspicious-nobel-103a0d.netlify.app
 
-The tech stack is:
-HTML5
-CSS3
-Flexbox
-Sass (Scss)
-BEM methodology
-JavaScript
-React
+<h2>The tech stack is:</h3>
 
-Author
+<ul>
+<li>HTML5</li>
+<li>CSS3</li>
+<li>Flexbox</li>
+<li>Sass (Scss)</li>
+<li>BEM methodology</li>
+<li>JavaScript</li>
+<li>React</li>
+</ul>
+
+<h2>Author</h2>
+
 Viktoria Doduchenko
