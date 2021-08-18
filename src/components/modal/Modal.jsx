@@ -1,6 +1,8 @@
 import React from 'react';
 import { createEvent } from '../../gateway/eventsGateway';
 import PropTypes from 'prop-types';
+import moment from 'moment'
+import {getDateTime} from '../../utils/dateUtils'
 import './modal.scss';
 
 const Modal = ({ closeModal, getEvent }) => {
@@ -8,27 +10,13 @@ const Modal = ({ closeModal, getEvent }) => {
     event.preventDefault();
     const formData = Object.fromEntries(new FormData(event.target));
 
-    const dataYear = new Date(formData.date).getFullYear();
-    const dataMonth = new Date(formData.date).getMonth();
-    const dataDate = new Date(formData.date).getDate();
+    const date = moment(formData.date).format("YYYY-MM-DD")
 
     createEvent({
       title: formData.title,
       description: formData.description,
-      dateFrom: new Date(
-        dataYear,
-        dataMonth,
-        dataDate,
-        formData.startTime.substring(0, 2),
-        formData.startTime.substring(3, 5)
-      ),
-      dateTo: new Date(
-        dataYear,
-        dataMonth,
-        dataDate,
-        formData.endTime.substring(0, 2),
-        formData.endTime.substring(3, 5)
-      ),
+      dateFrom: getDateTime(date, formData.startTime),
+      dateTo: getDateTime(date, formData.endTime),
     }).then(() => getEvent());
   };
 
